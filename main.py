@@ -1,17 +1,9 @@
-import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import statsmodels.formula.api as smf
+from utils import read_imdb
 
-df = pd.read_csv("imdb.csv")
-
-# Filtrar e limpar dados relevantes
-df = df[["title", "year", "rating_imdb", "oscar", "win", "duration", "budget"]]
-df = df.dropna()
-
-# Garantir tipos corretos
-df["oscar"] = df["oscar"].astype(bool).astype(int)
-df["win"] = df["win"].astype(bool).astype(int)
+df = read_imdb("imdb.csv")
 
 # Análise exploratória rápida
 sns.lineplot(data=df, x="year", y="rating_imdb")

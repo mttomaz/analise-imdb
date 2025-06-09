@@ -1,20 +1,11 @@
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error
-import pandas as pd
-from utils import duration_to_minutes
+from utils import read_imdb
 
-df = pd.read_csv("imdb.csv")
+df = read_imdb("imdb.csv")
 
-df = df[["title", "year", "rating_imdb", "oscar", "win", "duration", "budget"]]
-df = df.dropna()
-
-df["oscar"] = df["oscar"].astype(bool).astype(int)
-df["win"] = df["win"].astype(bool).astype(int)
-df["duration"] = df["duration"].apply(duration_to_minutes)
-df = df.dropna(subset=["duration"])
-
-X = df[["year", "duration", "budget", "oscar", "win"]]  # escolha colunas disponíveis
+X = df[["year", "duration", "budget", "oscar", "win"]]
 y = df["rating_imdb"]
 
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
